@@ -2,12 +2,15 @@ import java.util.*;
 
 class Main 
 {
+
+    final static int size = 8;
+
     public static void main(String[] args)
     {    
         
         Random random = new Random();
 
-        int[] nums = new int[2]; 
+        int[] nums = new int[size]; 
 
         for (int i = 0; i < nums.length; i++)
         {
@@ -17,81 +20,71 @@ class Main
         for (int i = 0; i < nums.length; i++)
         {
             System.out.println(nums[i]);
-        }
+        }            
         
-        for (int i = 0; i < nums.length; i++)
-        {   
-            if (nums[i] % 2 == 0 || nums[i] == 0)
-            {
-                nums[i] = nums[i] >> 4; 
-                nums[i] = nums[i] << 4;    
-            }
-
-            else if (nums[i] % 2 != 0)
-            {
-                nums[i] = nums[i] >> 4; 
-            }               
-        }
-
-        for (int i = 0; i < nums.length; i++)
+        ArrayList<Integer> resultado = comprimirArray(nums);
+        System.out.println("Comprimido: ");
+        for (int i: resultado)
         {
-            System.out.println(nums[i]);
-        }   
+            System.out.println(i);
+        }
         
-        String resultado = comprimirArray(nums);
-        System.out.println("Resultado: ");
-        System.out.println(resultado);
+        ArrayList<Integer> descomprimido = descomprimirArray(resultado);
+        System.out.println("Descomprimido: ");
+        for (int i: descomprimido)
+        {
+            System.out.println(i);
+        }        
+
     }   
 
-    public static String comprimirArray(int[] array)
+    public static ArrayList<Integer> comprimirArray(int[] nums)
     {   
-        String[] string_bins = new String[2]; 
+        ArrayList<Integer> final_list = new ArrayList<>();
 
-        for (int i = 0; i < array.length; i++)
-        {  
-
-            if (i % 2 == 0 || array[i] == 0)
+        for (int i = 0; i < nums.length; i++)
+        {   
+            if (i % 2 == 0 )
             {
-                String binario = Integer.toBinaryString(array[i]);
-                String parte1 = binario.substring(0,4);  
-                System.out.println(parte1);
-                string_bins = append(string_bins, parte1);
+                nums[i] = nums[i] >> 4; //11111111 - 00001111
+                nums[i] = nums[i] << 4; //11110000          
             }
 
             else if (i % 2 != 0)
             {
-                String binario = Integer.toBinaryString(array[i]);
-                String parte2 = binario.substring(binario.length()-4);
-                string_bins = append(string_bins, parte2);
-                System.out.println("teste2: ");
-            }        
-        }  
+                nums[i] = nums[i] >> 4; //00001111
+            }                
+        }       
         
-        for(int i = 0 ; i < 2; i++)
-        {
-            System.out.println(string_bins[i]);
-        }
-        String resultado = string_bins[0].concat(string_bins[1]);
+       for (int i = 0; i < nums.length; i++)
+       {
+            int indice = i;
+            i++;
+            int result = nums[indice] + nums[i];
+            final_list.add(result);
+            
+       }
 
-        return resultado;        
+        return final_list;        
         
     }
 
-    public static String[] append(String[] array, String elemento) 
+    public static ArrayList<Integer> descomprimirArray(ArrayList<Integer> Array)
     {
-    int novoTamanho = array.length + 1;
-    String[] novoArray = new String[novoTamanho];
+        ArrayList<Integer> decompressed_list = new ArrayList<>();
+    {   
+        for (int i = 0; i < Array.size(); i++)
+        {
+            int var1 = Array.get(i) & 0b11110000;             
 
-    // Copiar os elementos do array original para o novo array
-    for (int i = 0; i < array.length; i++) {
-        novoArray[i] = array[i];
+            int var2 = (Array.get(i) << 4) & 0b11110000;
+
+            decompressed_list.add(var1);
+            decompressed_list.add(var2);      
+        }
+
+        return decompressed_list;
+       
     }
-
-    // Adicionar o novo elemento ao final do novo array
-    novoArray[novoTamanho - 1] = elemento;
-
-    return novoArray;
     }
-
-   
 }
