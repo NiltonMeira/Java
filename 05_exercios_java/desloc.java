@@ -34,8 +34,11 @@ class Main
         for (int i: descomprimido)
         {
             System.out.println(i);
-        }        
-
+        } 
+        
+        
+        
+        
     }   
 
     public static ArrayList<Integer> comprimirArray(int[] nums)
@@ -87,4 +90,6 @@ class Main
        
     }
     }
+
+    
 }
