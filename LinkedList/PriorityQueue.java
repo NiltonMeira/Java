@@ -30,7 +30,10 @@ public class PriorityQueue<E> {
             {
                 index++;
             }
-            queue.add(index, data);
+            if (index != queue.getSize()-1)
+                queue.add(index, data);
+            else
+                queue.addLast(data);    
         }
         size++;
     }

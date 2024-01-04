@@ -12,6 +12,16 @@ public class LinkedList<E>{
         this.last = null;
         this.size = 0;
     }
+
+    public LinkedListItem<E> getItem(int index)
+    {
+       LinkedListItem<E> current = first;
+        for (int i=0; i < index; i++)
+        {
+            current = current.getNext();
+        }
+        return current;     
+    }
     
     public E get(int index)
     {
@@ -26,27 +36,28 @@ public class LinkedList<E>{
     public void add(int index, E data)
     {
         LinkedListItem<E> newItem = new LinkedListItem<E>(data);
-        LinkedListItem<E> current = first;
+        
 
         if (first == null) 
         {
             first = newItem;
             last = newItem;
         } 
+        else if (index == size -1)  
+        {   
+            last.setNext(newItem);
+            last = newItem;
+        }
         else 
-        {
-            for (int i=0; i < index -1; i++)
-            {
-                current = current.getNext();
-            }
-            newItem.setNext(current.getNext());
-            current.setNext(newItem);
+        {   
+            LinkedListItem<E> previews = getItem(index-1);
+            LinkedListItem<E> current = previews.getNext();
 
-            if (current.getNext() == null)
-            {
-                last = newItem;
-            }
-            }       
+            previews.setNext(newItem);            
+            newItem.setNext(current);
+            // last = newItem;     
+        } 
+            
       
         
         size++;
@@ -112,7 +123,6 @@ public class LinkedList<E>{
 
     public E removeFirst()
     {   
-        // return remove(0);
         E value = first.getValue();
         if(first == last)
         {
@@ -121,7 +131,7 @@ public class LinkedList<E>{
         }
         else
         {
-            first = first.getNext();
+            first = first.getNext();            
         }
         size --;
         return value;
@@ -143,7 +153,7 @@ public class LinkedList<E>{
             {
                 current = current.getNext();               
             }
-             last = current;
+            last = current;
         }
         size--;
         return value;     
