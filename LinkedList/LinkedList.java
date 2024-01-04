@@ -35,31 +35,24 @@ public class LinkedList<E>{
 
     public void add(int index, E data)
     {
-        LinkedListItem<E> newItem = new LinkedListItem<E>(data);
-        
-
         if (first == null) 
         {
-            first = newItem;
-            last = newItem;
+            addFirst(data);
         } 
         else if (index == size -1)  
         {   
-            last.setNext(newItem);
-            last = newItem;
+            addLast(data);
         }
         else 
         {   
+            LinkedListItem<E> newItem = new LinkedListItem<E>(data);
             LinkedListItem<E> previews = getItem(index-1);
             LinkedListItem<E> current = previews.getNext();
 
             previews.setNext(newItem);            
             newItem.setNext(current);
-            // last = newItem;     
         } 
             
-      
-        
         size++;
     }
 

@@ -19,22 +19,24 @@ public class PriorityQueue<E> {
 
     public void add(E data)
     {
-        if(queue.getSize() == 0)
+        int listSize = queue.getSize();
+
+        if(listSize == 0)
         {
-            queue.addLast(data);
+            queue.addFirst(data);
+            return;
         }
-        else
+
+        for (int i = 0; i < listSize; i++)
         {
-            int index = 0;
-            while (index < queue.getSize() && cmp.compare(data, queue.get(index)) >= 0 ) 
+            if (cmp.compare(data, queue.get(index)) >= 0)
             {
-                index++;
+                queue.add(i, data);
+                return;
             }
-            if (index != queue.getSize()-1)
-                queue.add(index, data);
-            else
-                queue.addLast(data);    
         }
+        queue.addLast(data);
+
         size++;
     }
 
